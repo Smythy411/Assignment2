@@ -8,7 +8,7 @@ class GameObject
   
   GameObject()
   {
-    this(width * 0.5f, height * 0.5f, 50, 20);
+    this(width * 0.5f, height * 0.5f, 50, 15);
   }
   
   GameObject(float x, float y, float w, float h)

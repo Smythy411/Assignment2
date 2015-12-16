@@ -5,6 +5,12 @@ class Paddle extends GameObject
   {
     super(width*0.5f, height * 0.9f, 50, 15);
   }
+  
+  Paddle(float xPos, float yPos)
+  {
+    this.x = xPos;
+    this.y = yPos;
+  }
 
   void update(char left, char right)
   {
