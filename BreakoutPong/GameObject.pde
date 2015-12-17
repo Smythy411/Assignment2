@@ -3,7 +3,7 @@ class GameObject
 {
   float x, y;
   float w, h;
-  float speed = 2.0f;
+  float speed = 5.0f;
   color c;
   
   GameObject()

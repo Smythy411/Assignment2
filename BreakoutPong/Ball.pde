@@ -1,8 +1,8 @@
 class Ball extends GameObject
 {
-    float ballRadius;
-    float dirX, dirY;
-    
+  float ballRadius;
+  float dirX, dirY;
+
   Ball()
   {
     super(width * 0.5f, height * 0.5f, 15, 15);
@@ -21,8 +21,29 @@ class Ball extends GameObject
     }
     if ((this.y > (height - ballRadius)) || (this.y < ballRadius))
     {
+      this.y = height / 2;
+    }
+    if (collision())
+    {
       this.dirY = - dirY;
     }
+  }
+
+  boolean collision()
+  {
+    boolean value = false;
+
+    if (((this.y >= paddleP1.y) && (this.y <= paddleP1.y + paddleP1.h))
+      && ((this.x >= paddleP1.x) && (this.x <= paddleP1.x + paddleP1.w)))
+    {
+      value = true;
+    }
+    if (((this.y >= paddleP2.y) && (this.y <= paddleP2.y +paddleP2.h))
+      && ((this.x >= paddleP2.x) && (this.x <= paddleP2.x + paddleP2.w)))
+    {
+      value = true;
+    }
+    return value;
   }
 
   void render()
