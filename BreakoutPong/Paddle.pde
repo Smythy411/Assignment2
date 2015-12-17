@@ -3,7 +3,7 @@ class Paddle extends GameObject
 
   Paddle()
   {
-    super(width*0.5f, height * 0.9f, 50, 15);
+    super(width * 0.5f, height * 0.9f, 50, 15);
   }
   
   Paddle(float xPos, float yPos)
@@ -28,6 +28,7 @@ class Paddle extends GameObject
   {
     c = (color(255, 0, 255));
     stroke(c);
+    fill(0, 255, 0);
     rect(x, y, w, h, 10);
   }
 }

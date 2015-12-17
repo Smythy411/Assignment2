@@ -3,7 +3,7 @@ class GameObject
 {
   float x, y;
   float w, h;
-  float speed = 5.0f;
+  float speed = 2.0f;
   color c;
   
   GameObject()
@@ -11,11 +11,11 @@ class GameObject
     this(width * 0.5f, height * 0.5f, 50, 15);
   }
   
-  GameObject(float x, float y, float w, float h)
+  GameObject(float xPos, float yPos, float var_width, float var_height)
   {
-    this.x = x;
-    this.y = y;
-    this.w = w;
-    this.h = h;
+    this.x = xPos;
+    this.y = yPos;
+    this.w = var_width;
+    this.h = var_height;
   }
 }
