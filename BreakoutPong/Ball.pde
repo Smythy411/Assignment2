@@ -2,6 +2,7 @@ class Ball extends GameObject
 {
   float ballRadius;
   float dirX, dirY;
+  int score1, score2;
 
   Ball()
   {
@@ -9,6 +10,7 @@ class Ball extends GameObject
     this.ballRadius = this.w / 2;
     this.dirX = super.speed;
     this.dirY = this.dirX;
+    this.score1 = this.score2 = 0;
   }
 
   void update()
@@ -19,9 +21,14 @@ class Ball extends GameObject
     {
       this.dirX = - dirX;
     }
-    if ((this.y > (height - ballRadius)) || (this.y < ballRadius))
+    if (this.y < ballRadius)
     {
       this.y = height / 2;
+      score1 ++;
+    } else if (this.y > (height - ballRadius))
+    {
+      this.y = height / 2;
+      score2 ++;
     }
     if (collision())
     {
