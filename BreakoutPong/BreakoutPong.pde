@@ -1,3 +1,5 @@
+MenuOption option1;
+MenuOption option2;
 Paddle paddleP1;
 Paddle paddleP2;
 Ball ball;
@@ -5,6 +7,8 @@ Ball ball;
 void setup()
 {
   size(1080, 650);
+  option1 = new MenuOption("1 Player", width * 0.5f, height * 0.3f, width - (width * 0.6f), 100);
+  option2 = new MenuOption("2 Player", width * 0.5f, height * 0.5f, width - (width * 0.6f), 100);
   paddleP1 = new Paddle(width * 0.5f, height * 0.9f);
   paddleP2 = new Paddle(width * 0.5f, height * 0.1f);
   ball = new Ball();
@@ -28,6 +32,9 @@ void draw()
   stroke(0, 0, 255);
   line(width * 0.3f, 0, width * 0.3f, height);
   line(width * 0.7f, 0, width * 0.7f, height);
+
+  option1.drawOption();
+  option2.drawOption();
 
   paddleP1.update('A', 'D');
   paddleP1.render();
