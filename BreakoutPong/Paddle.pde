@@ -32,14 +32,18 @@ class Paddle extends GameObject
       {
         while (this.x > ball.x)
         {
+          if (this.x == (width * 0.3))
+          {
+            break;
+          }
           this.x = constrain(x - speed, width * 0.3, width * 0.7);
         }
       }
       if (this.x < ball.x)
       {
-        while (this.x < ball.x)
+        while (this.x < ball.x - (this.w / 2))
         {
-          if(this.x == (width * 0.7) - this.w)
+          if (this.x == (width * 0.7) - this.w)
           {
             break;
           }

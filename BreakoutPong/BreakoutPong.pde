@@ -48,6 +48,8 @@ void draw()
   case 0:
     option1.drawOption();
     option2.drawOption();
+    
+    ball.score1 = ball.score2 = 0;
 
     break;
 
