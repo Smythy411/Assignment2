@@ -4,6 +4,8 @@ Paddle paddleP1;
 Paddle paddleP2;
 Ball ball;
 
+int option = 0;
+
 void setup()
 {
   size(1080, 650);
@@ -19,6 +21,11 @@ boolean[] keys = new boolean[512];
 void keyPressed()
 {
   keys[keyCode] = true;
+
+  if (key >= '0' && key <='3')
+  {
+    option = key - '0';
+  }//End if
 }
 
 void keyReleased()
@@ -29,26 +36,53 @@ void keyReleased()
 void draw()
 {
   background(0);
+
   stroke(0, 0, 255);
   line(width * 0.3f, 0, width * 0.3f, height);
   line(width * 0.7f, 0, width * 0.7f, height);
 
-  option1.drawOption();
-  option2.drawOption();
+  switch (option)
+  {
+  case 0:
+    option1.drawOption();
+    option2.drawOption();
 
-  paddleP1.update('A', 'D');
-  paddleP1.render();
+    break;
 
-  paddleP2.update('J', 'L');
-  paddleP2.render();
+  case 1:
 
-  ball.update();
-  ball.render();
+    paddleP1.update('A', 'D');
+    paddleP1.render();
 
-  textSize(32);
-  textAlign(CENTER);
-  text("Player 1", width * 0.15f, height * 0.4f);
-  text(ball.score1, width * 0.15, height * 0.5f);
-  text("Player 2", width * 0.85f, height * 0.4f);
-  text(ball.score2, width * 0.85, height * 0.5f);
+    ball.update();
+    ball.render();
+
+    textSize(32);
+    textAlign(CENTER);
+    text("Player 1", width * 0.15f, height * 0.4f);
+    text(ball.score1, width * 0.15, height * 0.5f);
+    text("Player 2", width * 0.85f, height * 0.4f);
+    text(ball.score2, width * 0.85, height * 0.5f);
+
+    break;
+  case 2:
+
+    paddleP1.update('A', 'D');
+    paddleP1.render();
+
+    paddleP2.update('J', 'L');
+    paddleP2.render();
+
+    ball.update();
+    ball.render();
+
+    textSize(32);
+    textAlign(CENTER);
+    text("Player 1", width * 0.15f, height * 0.4f);
+    text(ball.score1, width * 0.15, height * 0.5f);
+    text("Player 2", width * 0.85f, height * 0.4f);
+    text(ball.score2, width * 0.85, height * 0.5f);
+
+    break;
+  }
 }
