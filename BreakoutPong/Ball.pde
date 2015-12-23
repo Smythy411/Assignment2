@@ -45,10 +45,22 @@ class Ball extends GameObject
     {
       value = true;
     }
-    if (((this.y >= paddleP2.y) && (this.y <= paddleP2.y +paddleP2.h))
-      && ((this.x >= paddleP2.x) && (this.x <= paddleP2.x + paddleP2.w)))
+
+    if (option == 1)
     {
-      value = true;
+      if (((this.y >= paddleAI.y) && (this.y <= paddleAI.y + paddleAI.h))
+        && ((this.x >= paddleAI.x) && (this.x <= paddleAI.x + paddleAI.w)))
+      {
+        value = true;
+      }
+    }
+    if (option == 2)
+    {
+      if (((this.y >= paddleP2.y) && (this.y <= paddleP2.y + paddleP2.h))
+        && ((this.x >= paddleP2.x) && (this.x <= paddleP2.x + paddleP2.w)))
+      {
+        value = true;
+      }
     }
     return value;
   }

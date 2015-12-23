@@ -2,6 +2,7 @@ MenuOption option1;
 MenuOption option2;
 Paddle paddleP1;
 Paddle paddleP2;
+Paddle paddleAI;
 Ball ball;
 
 int option = 0;
@@ -11,8 +12,9 @@ void setup()
   size(1080, 650);
   option1 = new MenuOption("1 Player", width * 0.5f, height * 0.3f, width - (width * 0.6f), 100);
   option2 = new MenuOption("2 Player", width * 0.5f, height * 0.5f, width - (width * 0.6f), 100);
-  paddleP1 = new Paddle(width * 0.5f, height * 0.9f);
-  paddleP2 = new Paddle(width * 0.5f, height * 0.1f);
+  paddleP1 = new Paddle(width * 0.5f, height * 0.9f, false);
+  paddleP2 = new Paddle(width * 0.5f, height * 0.1f, false);
+  paddleAI = new Paddle(width * 0.5f, height * 0.1f, true);
   ball = new Ball();
 }
 
@@ -53,6 +55,9 @@ void draw()
 
     paddleP1.update('A', 'D');
     paddleP1.render();
+    
+    paddleAI.update('J', 'L');
+    paddleAI.render();
 
     ball.update();
     ball.render();
