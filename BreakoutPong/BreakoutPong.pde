@@ -20,6 +20,15 @@ void setup()
   paddleP2 = new Paddle(width * 0.5f, height * 0.1f, false);
   paddleAI = new Paddle(width * 0.5f, height * 0.1f, true);
   ball = new Ball();
+
+  for (float j = height * 0.2f; j < height * 0.4f; j += 20)
+  {
+    for (float i = width * 0.3f; i < width * 0.7f; i += 36)
+    {
+      Brick brick = new Brick(i, j, 36, 20);
+      bricks.add(brick);
+    }
+  }
 }
 
 boolean[] keys = new boolean[512];
@@ -118,19 +127,13 @@ void draw()
     paddleP1.update('A', 'D');
     paddleP1.render();
 
-    for (float i = width * 0.3f; i < width * 0.7f; i += 36)
-    {
-      Brick brick = new Brick(i, height * 0.2f, 36, 20);
-      bricks.add(brick);
-    }
-    
     for (int i = bricks.size() - 1; i >= 0; i --)
     {
       Brick b = bricks.get(i);
       b.render();
     }
-      break;
-    default:
-      option = 0;
-    }
+    break;
+  default:
+    option = 0;
   }
+}
