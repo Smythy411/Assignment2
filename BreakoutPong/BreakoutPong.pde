@@ -5,6 +5,7 @@ Paddle paddleP1;
 Paddle paddleP2;
 Paddle paddleAI;
 Ball ball;
+ArrayList<Brick> bricks = new ArrayList<Brick>();
 
 boolean inGame = false;
 int option = 0;
@@ -117,8 +118,19 @@ void draw()
     paddleP1.update('A', 'D');
     paddleP1.render();
 
-    break;
-  default:
-    option = 0;
+    for (float i = width * 0.3f; i < width * 0.7f; i += 36)
+    {
+      Brick brick = new Brick(i, height * 0.2f, 36, 20);
+      bricks.add(brick);
+    }
+    
+    for (int i = bricks.size() - 1; i >= 0; i --)
+    {
+      Brick b = bricks.get(i);
+      b.render();
+    }
+      break;
+    default:
+      option = 0;
+    }
   }
-}
