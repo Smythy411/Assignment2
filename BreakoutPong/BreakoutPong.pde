@@ -1,5 +1,6 @@
 MenuOption option1;
 MenuOption option2;
+MenuOption option3;
 Paddle paddleP1;
 Paddle paddleP2;
 Paddle paddleAI;
@@ -11,8 +12,9 @@ int option = 0;
 void setup()
 {
   size(1080, 650);
-  option1 = new MenuOption("1 Player", width * 0.5f, height * 0.3f, width - (width * 0.6f), 100);
-  option2 = new MenuOption("2 Player", width * 0.5f, height * 0.5f, width - (width * 0.6f), 100);
+  option1 = new MenuOption("1 Player Pong", width * 0.5f, height * 0.3f, width - (width * 0.6f), 100);
+  option2 = new MenuOption("2 Player Pong", width * 0.5f, height * 0.5f, width - (width * 0.6f), 100);
+  option3 = new MenuOption("Breakout", width * 0.5f, height * 0.7f, width - (width * 0.6f), 100);
   paddleP1 = new Paddle(width * 0.5f, height * 0.9f, false);
   paddleP2 = new Paddle(width * 0.5f, height * 0.1f, false);
   paddleAI = new Paddle(width * 0.5f, height * 0.1f, true);
@@ -25,7 +27,7 @@ void keyPressed()
 {
   keys[keyCode] = true;
 
-  if (key >= '0' && key <='2' && inGame == false)
+  if (key >= '0' && key <='3' && inGame == false)
   {
     option = key - '0';
   }//End if
@@ -52,6 +54,7 @@ void draw()
 
     option1.drawOption();
     option2.drawOption();
+    option3.drawOption();
 
     ball.score1 = ball.score2 = 0;
 
@@ -107,6 +110,12 @@ void draw()
     {
       option = 0;
     }
+
+    break;
+  case 3:
+
+    paddleP1.update('A', 'D');
+    paddleP1.render();
 
     break;
   default:
