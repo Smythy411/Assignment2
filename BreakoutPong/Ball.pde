@@ -67,9 +67,11 @@ class Ball extends GameObject
       for (int i = 0; i < bricks.size(); i++)
       {
         if (((this.y >= bricks.get(i).y) && (this.y <= bricks.get(i).y + bricks.get(i).h))
-          && ((this.x >= bricks.get(i).x) && (this.x <= bricks.get(i).x + bricks.get(i).w)))
+          && ((this.x >= bricks.get(i).x) && (this.x <= bricks.get(i).x + bricks.get(i).w))
+          && (bricks.get(i).hitDetection == false))
         {
           value = true;
+          bricks.get(i).hitDetection = true;
         }
       }
     }

@@ -20,7 +20,7 @@ void setup()
   paddleP2 = new Paddle(width * 0.5f, height * 0.1f, false);
   paddleAI = new Paddle(width * 0.5f, height * 0.1f, true);
   ball = new Ball();
-  
+
   int row = 0;
   int col = 0;
 
@@ -31,7 +31,7 @@ void setup()
     {
       Brick brick = new Brick(i, j, 36, 20, row, col);
       bricks.add(brick);
-      
+
       col ++;
     }
     row ++;
@@ -133,17 +133,18 @@ void draw()
 
     paddleP1.update('A', 'D');
     paddleP1.render();
-    
+
     ball.update();
     ball.render();
 
     for (int i = bricks.size() - 1; i >= 0; i --)
     {
       Brick b = bricks.get(i);
-      b.render();
-      println(b.r, b.c);
+      if (b.hitDetection == false)
+      {
+        b.render();
+      }
     }
-    
     break;
   default:
     option = 0;
