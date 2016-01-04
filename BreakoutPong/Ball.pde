@@ -2,7 +2,8 @@ class Ball extends GameObject
 {
   float ballRadius;
   float dirX, dirY;
-  int score1, score2;
+  int score1, score2, score3;
+  int lives;
 
   Ball()
   {
@@ -10,7 +11,8 @@ class Ball extends GameObject
     this.ballRadius = this.w / 2;
     this.dirX = super.speed;
     this.dirY = this.dirX;
-    this.score1 = this.score2 = 0;
+    this.score1 = this.score2 = this.score3 = 0;
+    this.lives = 3;
   }
 
   void update()
@@ -25,10 +27,14 @@ class Ball extends GameObject
     {
       this.y = height / 2;
       score1 ++;
-    } else if (this.y > (height - ballRadius))
+    } else if (this.y > (height - ballRadius) && (option == 1 || option == 2))
     {
       this.y = height / 2;
       score2 ++;
+    } else if (this.y > (height - ballRadius) && option == 3)
+    {
+      this.y = height / 2;
+      lives --;
     }
     if (collision())
     {
@@ -72,6 +78,7 @@ class Ball extends GameObject
         {
           value = true;
           bricks.get(i).hitDetection = true;
+          score3 += 10;
         }
       }
     }

@@ -21,20 +21,13 @@ void setup()
   paddleAI = new Paddle(width * 0.5f, height * 0.1f, true);
   ball = new Ball();
 
-  int row = 0;
-  int col = 0;
-
   for (float j = height * 0.2f; j < height * 0.4f; j += 20)
   {
-    col = 0;
     for (float i = width * 0.3f; i < width * 0.7f; i += 36)
     {
-      Brick brick = new Brick(i, j, 36, 20, row, col);
+      Brick brick = new Brick(i, j, 36, 20);
       bricks.add(brick);
-
-      col ++;
     }
-    row ++;
   }
 }
 
@@ -73,7 +66,8 @@ void draw()
     option2.drawOption();
     option3.drawOption();
 
-    ball.score1 = ball.score2 = 0;
+    ball.score1 = ball.score2 = ball.score3 = 0;
+    ball.lives = 3;
 
     break;
 
@@ -145,6 +139,19 @@ void draw()
         b.render();
       }
     }
+
+    textSize(32);
+    textAlign(CENTER);
+    text("Player 1", width * 0.15f, height * 0.4f);
+    text(ball.score3, width * 0.15, height * 0.5f);
+    text("Lives", width * 0.85f, height * 0.4f);
+    text(ball.lives, width * 0.85, height * 0.5f);
+    
+    if (ball.lives == 0 || ball.score3 == (10 * bricks.size() - 1))
+    {
+      option = 0;
+    }
+
     break;
   default:
     option = 0;
