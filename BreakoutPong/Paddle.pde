@@ -28,9 +28,9 @@ class Paddle extends GameObject
       }
     } else
     {
-      if (this.x > ball.x)
+      if (this.x > ball.location.x)
       {
-        while (this.x > ball.x)
+        while (this.x > ball.location.x)
         {
           if (this.x == (width * 0.3))
           {
@@ -39,9 +39,9 @@ class Paddle extends GameObject
           this.x = constrain(x - speed, width * 0.3, width * 0.7);
         }
       }
-      if (this.x < ball.x)
+      if (this.x < ball.location.x)
       {
-        while (this.x < ball.x - (this.w / 2))
+        while (this.x < ball.location.x - (this.w / 2))
         {
           if (this.x == (width * 0.7) - this.w)
           {
