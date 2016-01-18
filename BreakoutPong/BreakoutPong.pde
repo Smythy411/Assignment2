@@ -149,7 +149,7 @@ void draw()
     text("Lives", width * 0.85f, height * 0.4f);
     text(ball.lives, width * 0.85, height * 0.5f);
     
-    if (ball.lives == 0 || ball.score3 == (10 * bricks.size() - 1))
+    if (ball.lives == 0 || ball.score3 >= (10 * bricks.size() - 1))
     {
       option = 0;
     }

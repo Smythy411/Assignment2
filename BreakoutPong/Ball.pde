@@ -5,10 +5,11 @@ class Ball extends GameObject
   float ballRadius;
   float dirX, dirY;
   float theta;
-  float halfW, collisionX;
+  float collisionX;
   int brickCollision;
   int score1, score2, score3;
   int lives;
+  boolean minusCos;
 
   Ball()
   {
@@ -17,18 +18,28 @@ class Ball extends GameObject
     this.dirX = super.speed;
     this.dirY = this.dirX;
     this.theta = radians(180.0f);
-    this.collisionX = halfW = 0;
+    this.collisionX = 0;
     this.brickCollision = 0;
     this.score1 = this.score2 = this.score3 = 0;
     this.lives = 3;
+    this.minusCos = true;
     location = new PVector(this.x, this.y);
     velocity = new PVector(this.dirX, this.dirY);
   }
 
   void update()
   {
-    velocity.x = sin(theta);
-    velocity.y = - cos(theta);
+    if (minusCos == true)
+    {
+      velocity.x = sin(theta);
+      velocity.y = - cos(theta);
+    }
+    if (minusCos == false)
+    {
+      velocity.x = sin(theta);
+      velocity.y = cos(theta);
+    }
+
     velocity.mult(speed);
     location.add(velocity);
 
@@ -38,8 +49,14 @@ class Ball extends GameObject
     }
     if (location.y < ballRadius)
     {
-      location.y = height / 2;
-      score1 ++;
+      if (option == 3)
+      {
+        minusCos = false;
+      } else
+      {
+        location.y = height / 2;
+        score1 ++;
+      }
     } else if (location.y > (height - ballRadius) && (option == 1 || option == 2))
     {
       location.y = height / 2;
@@ -52,31 +69,23 @@ class Ball extends GameObject
 
     if (collision("PaddleP1"))
     {
-      halfW = (paddleP1.w / 2);
-      collisionX = location.x;
-      collisionX = map(collisionX, paddleP1.x, paddleP1.x + paddleP1.w, 0, paddleP1.w);
+      minusCos = true;
+      collisionX = map(location.x, paddleP1.x, paddleP1.x + paddleP1.w, 0, paddleP1.w);
       theta = radians(map(collisionX, 0, paddleP1.w, -45, 45));
     }
     if (collision("PaddleP2"))
     {
-      halfW = (paddleP2.w / 2);
-      collisionX = location.x;
-      collisionX = map(collisionX, paddleP2.x, paddleP2.x + paddleP2.w, 0, paddleP2.w);
+      collisionX = map(location.x, paddleP2.x, paddleP2.x + paddleP2.w, 0, paddleP2.w);
       theta = radians(map(collisionX, 0, paddleP2.w, -135, -225));
     }
     if (collision("PaddleAI"))
     {
-      halfW = (paddleAI.w / 2);
-      collisionX = location.x;
-      collisionX = map(collisionX, paddleAI.x, paddleAI.x + paddleAI.w, 0, paddleAI.w);
+      collisionX = map(location.x, paddleAI.x, paddleAI.x + paddleAI.w, 0, paddleAI.w);
       theta = radians(map(collisionX, 0, paddleAI.w, -135, -225));
     }
     if (collision("Brick"))
     {
-      halfW = (bricks.get(brickCollision).w / 2);
-      collisionX = location.x;
-      collisionX = map(collisionX, bricks.get(brickCollision).x, bricks.get(brickCollision).x + bricks.get(brickCollision).w, 0, bricks.get(brickCollision).w);
-      theta = radians(map(collisionX, 0, bricks.get(brickCollision).w, -135, -225));
+      minusCos = false;
     }
   }
 
@@ -115,9 +124,9 @@ class Ball extends GameObject
           && ((location.x >= bricks.get(i).x) && (location.x <= bricks.get(i).x + bricks.get(i).w))
           && (bricks.get(i).hitDetection == false))
         {
-          this.brickCollision = i;
           value = true;
           bricks.get(i).hitDetection = true;
+          this.brickCollision = i;
           score3 += 10;
         }
       }
