@@ -85,7 +85,7 @@ class Ball extends GameObject
     }
     if (collision("Brick"))
     {
-      minusCos = false;
+      minusCos = !minusCos;
     }
   }
 
@@ -118,7 +118,7 @@ class Ball extends GameObject
     }
     if (option == 3 && (collisionObject == "Brick"))
     {
-      for (int i = 0; i < bricks.size(); i++)
+      for (int i = 0; i < bricks.size (); i++)
       {
         if (((location.y >= bricks.get(i).y) && (location.y <= bricks.get(i).y + bricks.get(i).h))
           && ((location.x >= bricks.get(i).x) && (location.x <= bricks.get(i).x + bricks.get(i).w))
@@ -144,3 +144,4 @@ class Ball extends GameObject
     ellipse(location.x, location.y, this.w, this.h);
   }
 }
+
