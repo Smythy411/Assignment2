@@ -6,10 +6,9 @@ class Ball extends GameObject
   float dirX, dirY;
   float theta;
   float collisionX;
-  int brickCollision;
   int score1, score2, score3;
   int lives;
-  boolean minusCos;
+  boolean minusCos, minusSin;
 
   Ball()
   {
@@ -19,25 +18,35 @@ class Ball extends GameObject
     this.dirY = this.dirX;
     this.theta = radians(180.0f);
     this.collisionX = 0;
-    this.brickCollision = 0;
     this.score1 = this.score2 = this.score3 = 0;
     this.lives = 3;
     this.minusCos = true;
+    this.minusSin = false;
     location = new PVector(this.x, this.y);
     velocity = new PVector(this.dirX, this.dirY);
   }
 
   void update()
   {
-    if (minusCos == true)
+    if (minusCos == true && minusSin == false)
     {
       velocity.x = sin(theta);
       velocity.y = - cos(theta);
     }
-    if (minusCos == false)
+    if (minusCos == false && minusSin == false)
     {
       velocity.x = sin(theta);
       velocity.y = cos(theta);
+    }
+    if (minusSin == true && minusCos == false)
+    {
+      velocity.x = -sin(theta);
+      velocity.y = cos(theta);
+    }
+    if (minusCos == true && minusSin == true)
+    {
+      velocity.x = -sin(theta);
+      velocity.y = -cos(theta);
     }
 
     velocity.mult(speed);
@@ -45,13 +54,13 @@ class Ball extends GameObject
 
     if ((location.x > ((width * 0.7f) - ballRadius)) || (location.x < (width * 0.3f) + ballRadius))
     {
-      theta = -theta;
+      minusSin = !minusSin;
     }
     if (location.y < ballRadius)
     {
       if (option == 3)
       {
-        minusCos = false;
+        minusCos = !minusCos;
       } else
       {
         location.y = height / 2;
@@ -70,6 +79,7 @@ class Ball extends GameObject
     if (collision("PaddleP1"))
     {
       minusCos = true;
+      minusSin = false;
       collisionX = map(location.x, paddleP1.x, paddleP1.x + paddleP1.w, 0, paddleP1.w);
       theta = radians(map(collisionX, 0, paddleP1.w, -45, 45));
     }
@@ -83,9 +93,13 @@ class Ball extends GameObject
       collisionX = map(location.x, paddleAI.x, paddleAI.x + paddleAI.w, 0, paddleAI.w);
       theta = radians(map(collisionX, 0, paddleAI.w, -135, -225));
     }
-    if (collision("Brick"))
+    if (collision("Brick_Tops"))
     {
       minusCos = !minusCos;
+    }
+    if (collision("Brick_Sides"))
+    {
+      minusSin = !minusSin;
     }
   }
 
@@ -116,18 +130,35 @@ class Ball extends GameObject
         value = true;
       }
     }
-    if (option == 3 && (collisionObject == "Brick"))
+    if (option == 3)
     {
       for (int i = 0; i < bricks.size (); i++)
       {
-        if (((location.y >= bricks.get(i).y) && (location.y <= bricks.get(i).y + bricks.get(i).h))
-          && ((location.x >= bricks.get(i).x) && (location.x <= bricks.get(i).x + bricks.get(i).w))
-          && (bricks.get(i).hitDetection == false))
+        if ((collisionObject == "Brick_Sides") 
+        && (location.x + ballRadius >= bricks.get(i).x) && (location.x - ballRadius <= bricks.get(i).x + bricks.get(i).w))
         {
-          value = true;
-          bricks.get(i).hitDetection = true;
-          this.brickCollision = i;
-          score3 += 10;
+          if ((location.y + ballRadius>= bricks.get(i).y) && (location.y  - ballRadius <= bricks.get(i).y + bricks.get(i).h))
+          {
+            if (bricks.get(i).hitDetection == false)
+            {
+              value = true;
+              bricks.get(i).hitDetection = true;
+              score3 += 10;
+            }
+          }
+        }
+        if (( (collisionObject == "Brick_Tops")) 
+        && (location.y + ballRadius >= bricks.get(i).y) && (location.y - ballRadius <= bricks.get(i).y + bricks.get(i).h))
+        {
+          if ((location.x >= bricks.get(i).x) && (location.x <= bricks.get(i).x + bricks.get(i).w))
+          {
+            if (bricks.get(i).hitDetection == false)
+            {
+              value = true;
+              bricks.get(i).hitDetection = true;
+              score3 += 10;
+            }
+          }
         }
       }
     }
@@ -144,4 +175,3 @@ class Ball extends GameObject
     ellipse(location.x, location.y, this.w, this.h);
   }
 }
-
