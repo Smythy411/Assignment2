@@ -6,6 +6,7 @@ class Ball extends GameObject
   float dirX, dirY;
   float theta;
   float collisionX;
+  float baseSpeed;
   int score1, score2, score3;
   int lives;
   boolean minusCos, minusSin;
@@ -18,6 +19,7 @@ class Ball extends GameObject
     this.dirY = this.dirX;
     this.theta = radians(180.0f);
     this.collisionX = 0;
+    this.baseSpeed = this.speed;
     this.score1 = this.score2 = this.score3 = 0;
     this.lives = 3;
     this.minusCos = true;
@@ -65,15 +67,18 @@ class Ball extends GameObject
       {
         location.y = height / 2;
         score1 ++;
+        this.speed = baseSpeed;
       }
     } else if (location.y > (height - ballRadius) && (option == 1 || option == 2))
     {
       location.y = height / 2;
       score2 ++;
-    } else if (location.y > (height - ballRadius) && option == 3)
+      this.speed = baseSpeed;
+    } else if (location.y > (height - ballRadius) && (option == 3 || option == 4))
     {
       location.y = height / 2;
       lives --;
+      this.speed = baseSpeed;
     }
 
     if (collision("PaddleP1"))
@@ -85,11 +90,15 @@ class Ball extends GameObject
     }
     if (collision("PaddleP2"))
     {
+      minusCos = true;
+      minusSin = false;
       collisionX = map(location.x, paddleP2.x, paddleP2.x + paddleP2.w, 0, paddleP2.w);
       theta = radians(map(collisionX, 0, paddleP2.w, -135, -225));
     }
     if (collision("PaddleAI"))
     {
+      minusCos = true;
+      minusSin = false;
       collisionX = map(location.x, paddleAI.x, paddleAI.x + paddleAI.w, 0, paddleAI.w);
       theta = radians(map(collisionX, 0, paddleAI.w, -135, -225));
     }
@@ -114,7 +123,7 @@ class Ball extends GameObject
       value = true;
     }
 
-    if (option == 1 && (collisionObject == "PaddleAI"))
+    if ((option == 1 || option == 4) && (collisionObject == "PaddleAI"))
     {
       if (((location.y >= paddleAI.y) && (location.y <= paddleAI.y + paddleAI.h))
         && ((location.x >= paddleAI.x) && (location.x <= paddleAI.x + paddleAI.w)))
@@ -130,12 +139,12 @@ class Ball extends GameObject
         value = true;
       }
     }
-    if (option == 3)
+    if (option == 3 || option == 4)
     {
       for (int i = 0; i < bricks.size (); i++)
       {
         if ((collisionObject == "Brick_Sides") 
-        && (location.x + ballRadius >= bricks.get(i).x) && (location.x - ballRadius <= bricks.get(i).x + bricks.get(i).w))
+          && (location.x + ballRadius >= bricks.get(i).x) && (location.x - ballRadius <= bricks.get(i).x + bricks.get(i).w))
         {
           if ((location.y + ballRadius>= bricks.get(i).y) && (location.y  - ballRadius <= bricks.get(i).y + bricks.get(i).h))
           {
@@ -148,7 +157,7 @@ class Ball extends GameObject
           }
         }
         if (( (collisionObject == "Brick_Tops")) 
-        && (location.y + ballRadius >= bricks.get(i).y) && (location.y - ballRadius <= bricks.get(i).y + bricks.get(i).h))
+          && (location.y + ballRadius >= bricks.get(i).y) && (location.y - ballRadius <= bricks.get(i).y + bricks.get(i).h))
         {
           if ((location.x >= bricks.get(i).x) && (location.x <= bricks.get(i).x + bricks.get(i).w))
           {
@@ -161,6 +170,10 @@ class Ball extends GameObject
           }
         }
       }
+    }
+    if (value == true)
+    {
+      this.speed += 0.05f;
     }
     return value;
   }
