@@ -10,7 +10,9 @@ Ball ball;
 ArrayList<Brick> bricks = new ArrayList<Brick>();
 
 boolean inGame = false;
+boolean sizeConstraint = false;
 int option = 0;
+float textSize;
 
 void setup()
 {
@@ -25,6 +27,8 @@ void setup()
   paddleP2 = new Paddle(width * 0.5f, height * 0.1f, false);
   paddleAI = new Paddle(width * 0.5f, height * 0.1f, true);
   ball = new Ball();
+
+  textSize = 32;
 
   for (float j = height * 0.2f; j < height * 0.4f; j += 20)
   {
@@ -53,6 +57,30 @@ void keyReleased()
   keys[keyCode] = false;
 }
 
+void textAnimation()
+{
+  if (frameCount % 5 == 0 && sizeConstraint == false)
+  {
+    textSize += 0.5f;
+    if (textSize >= 35)
+    {
+      sizeConstraint = true;
+    }
+  }
+  if (frameCount % 5 == 0 && sizeConstraint == true)
+  {
+    textSize -= 0.5f;
+    if (textSize <= 30)
+    {
+      sizeConstraint = false;
+    }
+  }
+  if (frameCount % 10 == 0)
+  {
+    fill(color(0, 255, 255));
+  }
+}
+
 void draw()
 {
   background(0);
@@ -67,6 +95,11 @@ void draw()
 
     inGame = false;
 
+    textAnimation();
+
+    textSize(textSize);
+    textAlign(CENTER);
+    text("BREAKOUTPONG", width * 0.5f, height * 0.1f);
     option1.drawOption();
     option2.drawOption();
     option3.drawOption();
@@ -74,6 +107,12 @@ void draw()
 
     ball.score1 = ball.score2 = ball.score3 = 0;
     ball.lives = 3;
+
+    for (int i = bricks.size() - 1; i >= 0; i --)
+    {
+      Brick b = bricks.get(i);
+      b.hitDetection = false;
+    }
 
     break;
 
