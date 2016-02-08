@@ -1,3 +1,6 @@
+import processing.sound.*;
+SoundFile backgroundMusic;
+
 MenuOption option1;
 MenuOption option2;
 MenuOption option3;
@@ -19,6 +22,10 @@ void setup()
   size(1080, 650);
   frameRate(60);
   smooth();
+  
+  backgroundMusic = new SoundFile(this, "background.mp3");
+  backgroundMusic.play();
+  
   option1 = new MenuOption("1 Player Pong", width * 0.5f, height * 0.3f, width - (width * 0.6f), 100);
   option2 = new MenuOption("2 Player Pong", width * 0.5f, height * 0.5f, width - (width * 0.6f), 100);
   option3 = new MenuOption("Solo Breakout", width * 0.5f, height * 0.7f, width - (width * 0.6f), 100);
