@@ -10,6 +10,7 @@ class Ball extends GameObject
   int score1, score2, score3;
   int lives;
   boolean minusCos, minusSin;
+  AudioPlayer brickBreak;
 
   Ball()
   {
@@ -26,6 +27,8 @@ class Ball extends GameObject
     this.minusSin = false;
     location = new PVector(this.x, this.y);
     velocity = new PVector(this.dirX, this.dirY);
+    
+    brickBreak = minim.loadFile("brickBreak.wav");
   }
 
   void update()
@@ -169,6 +172,7 @@ class Ball extends GameObject
             }
           }
         }
+        brickBreak.play();
       }
     }
     if (value == true)

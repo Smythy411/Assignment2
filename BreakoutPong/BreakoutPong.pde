@@ -33,7 +33,7 @@ void setup()
   minim = new Minim(this);
   
   bgMusic = minim.loadFile("background.mp3");
-  bgMusic.play();
+  bgMusic.loop();
 
   option1 = new MenuOption("1 Player Pong", width * 0.5f, height * 0.3f, width - (width * 0.6f), 100);
   option2 = new MenuOption("2 Player Pong", width * 0.5f, height * 0.5f, width - (width * 0.6f), 100);
@@ -66,6 +66,18 @@ void keyPressed()
   {
     option = key - '0';
   }//End if
+  
+  if (key == 'p' || key == 'P')
+  {
+    if ( bgMusic.isPlaying())
+    {
+      bgMusic.pause();
+    }
+    else
+    {
+      bgMusic.loop();
+    }
+  }
 }
 
 void keyReleased()
