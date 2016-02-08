@@ -10,7 +10,7 @@ class Ball extends GameObject
   int score1, score2, score3;
   int lives;
   boolean minusCos, minusSin;
-  AudioPlayer brickBreak;
+  AudioSample brickBreak, paddleHit;
 
   Ball()
   {
@@ -28,7 +28,8 @@ class Ball extends GameObject
     location = new PVector(this.x, this.y);
     velocity = new PVector(this.dirX, this.dirY);
     
-    brickBreak = minim.loadFile("brickBreak.wav");
+    brickBreak = minim.loadSample("brickBreak.wav");
+    paddleHit = minim.loadSample("paddleHit.wav");
   }
 
   void update()
@@ -124,14 +125,15 @@ class Ball extends GameObject
       && (collisionObject == "PaddleP1"))
     {
       value = true;
+      paddleHit.trigger();
     }
-
     if ((option == 1 || option == 4) && (collisionObject == "PaddleAI"))
     {
       if (((location.y >= paddleAI.y) && (location.y <= paddleAI.y + paddleAI.h))
         && ((location.x >= paddleAI.x) && (location.x <= paddleAI.x + paddleAI.w)))
       {
         value = true;
+        paddleHit.trigger();
       }
     }
     if (option == 2 && (collisionObject == "PaddleP2"))
@@ -140,6 +142,7 @@ class Ball extends GameObject
         && ((location.x >= paddleP2.x) && (location.x <= paddleP2.x + paddleP2.w)))
       {
         value = true;
+        paddleHit.trigger();
       }
     }
     if (option == 3 || option == 4)
@@ -156,6 +159,7 @@ class Ball extends GameObject
               value = true;
               bricks.get(i).hitDetection = true;
               score3 += 10;
+              brickBreak.trigger();
             }
           }
         }
@@ -169,10 +173,10 @@ class Ball extends GameObject
               value = true;
               bricks.get(i).hitDetection = true;
               score3 += 10;
+              brickBreak.trigger();
             }
           }
         }
-        brickBreak.play();
       }
     }
     if (value == true)
