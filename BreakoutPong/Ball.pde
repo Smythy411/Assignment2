@@ -27,7 +27,7 @@ class Ball extends GameObject
     this.minusSin = false;
     location = new PVector(this.x, this.y);
     velocity = new PVector(this.dirX, this.dirY);
-    
+
     brickBreak = minim.loadSample("brickBreak.mp3");
     paddleHit = minim.loadSample("paddleHit.wav");
     lifeLost = minim.loadSample("lifeLost.mp3");
@@ -147,7 +147,7 @@ class Ball extends GameObject
         paddleHit.trigger();
       }
     }
-    if (option == 3 || option == 4)
+    if (option == 3)
     {
       for (int i = 0; i < bricks.size (); i++)
       {
@@ -161,6 +161,7 @@ class Ball extends GameObject
               value = true;
               bricks.get(i).hitDetection = true;
               score3 += 10;
+
               brickBreak.trigger();
             }
           }
@@ -175,6 +176,7 @@ class Ball extends GameObject
               value = true;
               bricks.get(i).hitDetection = true;
               score3 += 10;
+
               brickBreak.trigger();
             }
           }

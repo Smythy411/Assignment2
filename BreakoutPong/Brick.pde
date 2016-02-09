@@ -1,6 +1,6 @@
 class Brick extends GameObject
 {
-  
+
   boolean hitDetection = false;
 
   Brick()
@@ -20,6 +20,7 @@ class Brick extends GameObject
   {
     stroke(0, 255, 0);
     fill(255);
+
     rect(this.x, this.y, w, h);
   }
 }

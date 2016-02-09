@@ -21,7 +21,7 @@ class MenuOption extends GameObject
 
   void textAnimation()
   {
-    if (frameCount % 2 == 0 && this.sizeConstraint == false)
+    if (frameCount % 1 == 0 && this.sizeConstraint == false)
     {
       this.textSize += 0.5f;
       if (this.textSize >= 35)
@@ -29,17 +29,13 @@ class MenuOption extends GameObject
         this.sizeConstraint = true;
       }
     }
-    if (frameCount % 2 == 0 && this.sizeConstraint == true)
+    if (frameCount % 1 == 0 && this.sizeConstraint == true)
     {
       this.textSize -= 0.5f;
       if (this.textSize <= 30)
       {
         this.sizeConstraint = false;
       }
-    }
-    if (frameCount % 10 == 0)
-    {
-      fill(color(0, 255, 255));
     }
   }
 
