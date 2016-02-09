@@ -1,6 +1,7 @@
 class MenuOption extends GameObject
 {
   String optionText;
+  boolean sizeConstraint;
   float textSize;
   MenuOption()
   {
@@ -14,32 +15,46 @@ class MenuOption extends GameObject
     this.y = yPos;
     this.w = var_width;
     this.h = var_height;
+    this.sizeConstraint = false;
     this.textSize = 32;
   }
 
-void textAnimation()
-{
-  if (frameCount % 2 == 0 && sizeConstraint == false)
+  void textAnimation()
   {
-    this.textSize += 0.5f;
-    if (this.textSize >= 35)
+    if (frameCount % 2 == 0 && this.sizeConstraint == false)
     {
-      sizeConstraint = true;
+      this.textSize += 0.5f;
+      if (this.textSize >= 35)
+      {
+        this.sizeConstraint = true;
+      }
+    }
+    if (frameCount % 2 == 0 && this.sizeConstraint == true)
+    {
+      this.textSize -= 0.5f;
+      if (this.textSize <= 30)
+      {
+        this.sizeConstraint = false;
+      }
+    }
+    if (frameCount % 10 == 0)
+    {
+      fill(color(0, 255, 255));
     }
   }
-  if (frameCount % 2 == 0 && sizeConstraint == true)
+
+  boolean hoverOver()
   {
-    this.textSize -= 0.5f;
-    if (this.textSize <= 30)
+    if ((mouseX > (width * 0.4f) && mouseX < width * 0.6f)
+    && (mouseY < this.y) && (mouseY > this.y - this.h))
     {
-      sizeConstraint = false;
+      return true;
+    }
+    else
+    {
+      return false;
     }
   }
-  if (frameCount % 10 == 0)
-  {
-    fill(color(0, 255, 255));
-  }
-}
 
   void drawOption()
   {

@@ -15,9 +15,7 @@ Ball ball;
 ArrayList<Brick> bricks = new ArrayList<Brick>();
 
 boolean inGame = false;
-boolean sizeConstraint = false;
 int option = 0;
-float textSize;
 
 void setup()
 {
@@ -39,8 +37,6 @@ void setup()
   paddleP2 = new Paddle(width * 0.5f, height * 0.1f, false);
   paddleAI = new Paddle(width * 0.5f, height * 0.1f, true);
   ball = new Ball();
-
-  textSize = 32;
 
   for (float j = height * 0.2f; j < height * 0.4f; j += 20)
   {
@@ -97,8 +93,20 @@ void draw()
     header.drawOption();
     header.textAnimation();
     option1.drawOption();
+    if (option1.hoverOver())
+    {
+      option1.textAnimation();
+    }
     option2.drawOption();
+    if(option2.hoverOver())
+    {
+      option2.textAnimation();
+    }
     option3.drawOption();
+    if(option3.hoverOver())
+    {
+      option3.textAnimation();
+    }
 
     for (int i = 0; i < bgMusic.bufferSize() - 1; i++)
     {
