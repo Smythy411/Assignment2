@@ -11,13 +11,23 @@ This game has three separate modes with four five screens including a menu scree
 
 * Menu Screen:	Simple splash screen with three options. Options can be selected with the mouse or with the keyboard.
 
+![Sketch](https://github.com/Smythy411/Assignment2/blob/master/images/menu.PNG)
+
 * 1 Player Pong:	Player v Computer Pong
+
+![Sketch](https://github.com/Smythy411/Assignment2/blob/master/images/1PlayerPong.PNG)
 
 * 2 Player Pong:	Player v Player Pong
 
+![Sketch](https://github.com/Smythy411/Assignment2/blob/master/images/2PlayerPong.PNG)
+
 * Breakout:		The classic brick breaking game breakout
 
+![Sketch](https://github.com/Smythy411/Assignment2/blob/master/images/breakout.PNG)
+
 * Pause Screen:	Simple pause screen with options to pause music, return to game or return to main menu.
+
+![Sketch](https://github.com/Smythy411/Assignment2/blob/master/images/pauseMenu.PNG)
 
 ##Controls
 
@@ -38,5 +48,6 @@ The biggest problem I ran into was collision detection. It was a lot of work to 
 ##DIsclaimer
 All code written for this assignment was either written from scratch by me or adapted from code written in class or in labs. If for whatever reason you would like to use any of it feel free.
 
-Music:	Anamanaguchi - Another Winter
+Music:	Anamanaguchi - Another Winter.
+
 Sound Effects: All Sound Effects taken from http://soundbible.com/
