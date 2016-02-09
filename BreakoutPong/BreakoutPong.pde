@@ -3,6 +3,7 @@ import ddf.minim.*;
 Minim minim;
 AudioPlayer bgMusic;
 
+MenuOption header;
 MenuOption option1;
 MenuOption option2;
 MenuOption option3;
@@ -30,9 +31,10 @@ void setup()
   bgMusic.loop();
   bgMusic.setGain(-10.00);
 
+  header = new MenuOption("BREAKOUTPONG", width * 0.5f, height * 0.1f, width - (width * 0.6f), 100);
   option1 = new MenuOption("1 Player Pong", width * 0.5f, height * 0.3f, width - (width * 0.6f), 100);
   option2 = new MenuOption("2 Player Pong", width * 0.5f, height * 0.5f, width - (width * 0.6f), 100);
-  option3 = new MenuOption("Solo Breakout", width * 0.5f, height * 0.7f, width - (width * 0.6f), 100);
+  option3 = new MenuOption("Breakout", width * 0.5f, height * 0.7f, width - (width * 0.6f), 100);
   paddleP1 = new Paddle(width * 0.5f, height * 0.9f, false);
   paddleP2 = new Paddle(width * 0.5f, height * 0.1f, false);
   paddleAI = new Paddle(width * 0.5f, height * 0.1f, true);
@@ -78,30 +80,6 @@ void keyReleased()
   keys[keyCode] = false;
 }
 
-void textAnimation()
-{
-  if (frameCount % 5 == 0 && sizeConstraint == false)
-  {
-    textSize += 0.5f;
-    if (textSize >= 35)
-    {
-      sizeConstraint = true;
-    }
-  }
-  if (frameCount % 5 == 0 && sizeConstraint == true)
-  {
-    textSize -= 0.5f;
-    if (textSize <= 30)
-    {
-      sizeConstraint = false;
-    }
-  }
-  if (frameCount % 10 == 0)
-  {
-    fill(color(0, 255, 255));
-  }
-}
-
 void draw()
 {
   background(0);
@@ -116,11 +94,8 @@ void draw()
 
     inGame = false;
 
-    textAnimation();
-
-    textSize(textSize);
-    textAlign(CENTER);
-    text("BREAKOUTPONG", width * 0.5f, height * 0.1f);
+    header.drawOption();
+    header.textAnimation();
     option1.drawOption();
     option2.drawOption();
     option3.drawOption();
@@ -161,8 +136,6 @@ void draw()
     textAlign(CENTER);
     text("Player 1", width * 0.15f, height * 0.4f);
     text(ball.score1, width * 0.15, height * 0.5f);
-    text(paddleP1.speed, width * 0.15, height * 0.6f);
-    text(ball.speed, width * 0.15, height * 0.7f);
     text("Computer", width * 0.85f, height * 0.4f);
     text(ball.score2, width * 0.85, height * 0.5f);
 
