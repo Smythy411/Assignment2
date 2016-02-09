@@ -15,6 +15,8 @@ Ball ball;
 ArrayList<Brick> bricks = new ArrayList<Brick>();
 
 boolean inGame = false;
+boolean gamePaused = false;
+int tempOption;
 int option = 0;
 
 void setup()
@@ -54,20 +56,16 @@ void keyPressed()
 {
   keys[keyCode] = true;
 
-  if (key >= '0' && key <= '4' && inGame == false)
+  if (key >= '0' && key <= '3' && inGame == false)
   {
     option = key - '0';
   }//End if
 
-  if (key == 'p' || key == 'P')
+  if ((inGame == true) && (key == ENTER))
   {
-    if ( bgMusic.isPlaying())
-    {
-      bgMusic.pause();
-    } else
-    {
-      bgMusic.loop();
-    }
+    gamePaused = true;
+    tempOption = option;
+    option = 4;
   }
 }
 
@@ -75,6 +73,7 @@ void keyReleased()
 {
   keys[keyCode] = false;
 }
+
 
 void draw()
 {
@@ -96,16 +95,28 @@ void draw()
     if (option1.hoverOver())
     {
       option1.textAnimation();
+      if (mousePressed)
+      {
+        option = 1;
+      }
     }
     option2.drawOption();
-    if(option2.hoverOver())
+    if (option2.hoverOver())
     {
       option2.textAnimation();
+      if (mousePressed)
+      {
+        option = 2;
+      }
     }
     option3.drawOption();
-    if(option3.hoverOver())
+    if (option3.hoverOver())
     {
       option3.textAnimation();
+      if (mousePressed)
+      {
+        option = 3;
+      }
     }
 
     for (int i = 0; i < bgMusic.bufferSize() - 1; i++)
@@ -131,85 +142,132 @@ void draw()
 
     inGame = true;
 
-    paddleP1.update('A', 'D');
-    paddleP1.render();
-
-    paddleAI.update('J', 'L');
-    paddleAI.render();
-
-    ball.update();
-    ball.render();
-
-    textSize(32);
-    textAlign(CENTER);
-    text("Player 1", width * 0.15f, height * 0.4f);
-    text(ball.score1, width * 0.15, height * 0.5f);
-    text("Computer", width * 0.85f, height * 0.4f);
-    text(ball.score2, width * 0.85, height * 0.5f);
-
-    if (ball.score1 == 10 || ball.score2 == 10)
+    if (gamePaused == false)
     {
-      option = 0;
-    }
+      paddleP1.update('A', 'D');
+      paddleP1.render();
 
+      paddleAI.update('J', 'L');
+      paddleAI.render();
+
+      ball.update();
+      ball.render();
+
+      textSize(32);
+      textAlign(CENTER);
+      text("Player 1", width * 0.15f, height * 0.4f);
+      text(ball.score1, width * 0.15, height * 0.5f);
+      text("Computer", width * 0.85f, height * 0.4f);
+      text(ball.score2, width * 0.85, height * 0.5f);
+
+      if (ball.score1 == 10 || ball.score2 == 10)
+      {
+        option = 0;
+      }
+    }
     break;
   case 2:
 
     inGame = true;
 
-    paddleP1.update('A', 'D');
-    paddleP1.render();
-
-    paddleP2.update('J', 'L');
-    paddleP2.render();
-
-    ball.update();
-    ball.render();
-
-    textSize(32);
-    textAlign(CENTER);
-    text("Player 1", width * 0.15f, height * 0.4f);
-    text(ball.score1, width * 0.15, height * 0.5f);
-    text("Player 2", width * 0.85f, height * 0.4f);
-    text(ball.score2, width * 0.85, height * 0.5f);
-
-    if (ball.score1 == 10 || ball.score2 == 10)
+    if (gamePaused == false)
     {
-      option = 0;
-    }
+      paddleP1.update('A', 'D');
+      paddleP1.render();
 
+      paddleP2.update('J', 'L');
+      paddleP2.render();
+
+      ball.update();
+      ball.render();
+
+      textSize(32);
+      textAlign(CENTER);
+      text("Player 1", width * 0.15f, height * 0.4f);
+      text(ball.score1, width * 0.15, height * 0.5f);
+      text("Player 2", width * 0.85f, height * 0.4f);
+      text(ball.score2, width * 0.85, height * 0.5f);
+
+      if (ball.score1 == 10 || ball.score2 == 10)
+      {
+        option = 0;
+      }
+    }
     break;
   case 3:
 
     inGame = true;
 
-    paddleP1.update('A', 'D');
-    paddleP1.render();
-
-    ball.update();
-    ball.render();
-
-    for (int i = bricks.size() - 1; i >= 0; i --)
+    if (gamePaused == false)
     {
-      Brick b = bricks.get(i);
-      if (b.hitDetection == false)
+      paddleP1.update('A', 'D');
+      paddleP1.render();
+
+      ball.update();
+      ball.render();
+
+      for (int i = bricks.size() - 1; i >= 0; i --)
       {
-        b.render();
+        Brick b = bricks.get(i);
+        if (b.hitDetection == false)
+        {
+          b.render();
+        }
+      }
+
+      textSize(32);
+      textAlign(CENTER);
+      text("Player 1", width * 0.15f, height * 0.4f);
+      text(ball.score3, width * 0.15, height * 0.5f);
+      text("Lives", width * 0.85f, height * 0.4f);
+      text(ball.lives, width * 0.85, height * 0.5f);
+
+      if (ball.lives == 0 || ball.score3 >= (10 * bricks.size() - 1))
+      {
+        option = 0;
       }
     }
+    break;
+
+  case 4:
 
     textSize(32);
     textAlign(CENTER);
-    text("Player 1", width * 0.15f, height * 0.4f);
-    text(ball.score3, width * 0.15, height * 0.5f);
-    text("Lives", width * 0.85f, height * 0.4f);
-    text(ball.lives, width * 0.85, height * 0.5f);
+    fill(0, 255, 0);
+    text("Game Paused", width * 0.5f, height * 0.1f);
+    fill(255);
+    text("Pause Music: [P]", width * 0.5f, height * 0.3f);
+    text("Resume Music: [R]", width * 0.5f, height * 0.5f);
+    text("Return to Game: [G]", width * 0.5f, height * 0.7f);
+    text("Return to Menu: [M]", width * 0.5f, height * 0.9f);
 
-    if (ball.lives == 0 || ball.score3 >= (10 * bricks.size() - 1))
+    if (gamePaused == true)
     {
-      option = 0;
+      if (key == 'p' || key == 'P')
+      {
+        if (bgMusic.isPlaying())
+        {
+          bgMusic.pause();
+        }
+      }
+      if (key == 'r' || key == 'R')
+      {
+        if (bgMusic.isPlaying() == false)
+        {
+          bgMusic.loop();
+        }
+      }
+      if (key == 'm' || key == 'M')
+      {
+        gamePaused = false;
+        option = 0;
+      }
+      if (key == 'g' || key == 'G')
+      {
+        gamePaused = false;
+        option = tempOption;
+      }
     }
-
     break;
 
   default:
