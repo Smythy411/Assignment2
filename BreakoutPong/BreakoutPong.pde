@@ -1,9 +1,4 @@
 import ddf.minim.*;
-import ddf.minim.analysis.*;
-import ddf.minim.effects.*;
-import ddf.minim.signals.*;
-import ddf.minim.spi.*;
-import ddf.minim.ugens.*;
 
 Minim minim;
 AudioPlayer bgMusic;
@@ -29,11 +24,12 @@ void setup()
   size(1080, 650);
   frameRate(60);
   smooth();
-  
+
   minim = new Minim(this);
-  
+
   bgMusic = minim.loadFile("background.mp3");
   bgMusic.loop();
+  bgMusic.setGain(-10.00);
 
   option1 = new MenuOption("1 Player Pong", width * 0.5f, height * 0.3f, width - (width * 0.6f), 100);
   option2 = new MenuOption("2 Player Pong", width * 0.5f, height * 0.5f, width - (width * 0.6f), 100);
@@ -66,14 +62,13 @@ void keyPressed()
   {
     option = key - '0';
   }//End if
-  
+
   if (key == 'p' || key == 'P')
   {
     if ( bgMusic.isPlaying())
     {
       bgMusic.pause();
-    }
-    else
+    } else
     {
       bgMusic.loop();
     }
@@ -132,6 +127,14 @@ void draw()
     option2.drawOption();
     option3.drawOption();
     option4.drawOption();
+
+    for (int i = 0; i < bgMusic.bufferSize() - 1; i++)
+    {
+      line(map(i, 0, bgMusic.bufferSize(), 0, width), 
+        height - bgMusic.mix.get(i)*100, 
+        map(i + 1, 0, bgMusic.bufferSize(), 0, width), 
+        height - bgMusic.mix.get(i+1));
+    }
 
     ball.score1 = ball.score2 = ball.score3 = 0;
     ball.lives = 3;

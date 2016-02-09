@@ -10,7 +10,7 @@ class Ball extends GameObject
   int score1, score2, score3;
   int lives;
   boolean minusCos, minusSin;
-  AudioSample brickBreak, paddleHit;
+  AudioSample brickBreak, paddleHit, lifeLost;
 
   Ball()
   {
@@ -28,8 +28,9 @@ class Ball extends GameObject
     location = new PVector(this.x, this.y);
     velocity = new PVector(this.dirX, this.dirY);
     
-    brickBreak = minim.loadSample("brickBreak.wav");
+    brickBreak = minim.loadSample("brickBreak.mp3");
     paddleHit = minim.loadSample("paddleHit.wav");
+    lifeLost = minim.loadSample("lifeLost.mp3");
   }
 
   void update()
@@ -83,6 +84,7 @@ class Ball extends GameObject
       location.y = height / 2;
       lives --;
       this.speed = baseSpeed;
+      lifeLost.trigger();
     }
 
     if (collision("PaddleP1"))
